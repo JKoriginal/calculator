@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import styles from "./Calculator.module.css";
 
@@ -7,11 +6,7 @@ const Calculator = () => {
   const [result, setResult] = useState<string>("");
 
   const handleInput = (value: string) => {
-    if (/[+\-*/]$/g.test(input) && /[+\-*/]/g.test(value)) {
-      setInput(input.replace(/[+\-*/]$/g, value));
-    } else {
-      setInput(input + value);
-    }
+    setInput(input + value);
   };
 
   const calculateResult = () => {
@@ -27,21 +22,45 @@ const Calculator = () => {
     setResult("");
   };
 
+  const handleUndo = () => {
+    if (input.length > 0) {
+      setInput(input.slice(0, -1));
+    }
+  };
+
   return (
     <div className={styles.calculator}>
       <div className={styles.display}>{result || input || "0"}</div>
       <div className={styles.buttons}>
-        <button className={styles.button} onClick={() => clearInput()}>
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={clearInput}
+        >
           AC
         </button>
-        <button className={styles.button} onClick={() => handleInput("/")}>
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={() => handleInput("(")}
+        >
+          (
+        </button>
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={() => handleInput(")")}
+        >
+          )
+        </button>
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={() => handleInput("/")}
+        >
           /
         </button>
-        <button className={styles.button} onClick={() => handleInput("*")}>
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={() => handleInput("*")}
+        >
           *
-        </button>
-        <button className={styles.button} onClick={() => handleInput("-")}>
-          -
         </button>
         <button className={styles.button} onClick={() => handleInput("7")}>
           7
@@ -52,8 +71,11 @@ const Calculator = () => {
         <button className={styles.button} onClick={() => handleInput("9")}>
           9
         </button>
-        <button className={styles.button} onClick={() => handleInput("+")}>
-          +
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={() => handleInput("-")}
+        >
+          -
         </button>
         <button className={styles.button} onClick={() => handleInput("4")}>
           4
@@ -64,6 +86,12 @@ const Calculator = () => {
         <button className={styles.button} onClick={() => handleInput("6")}>
           6
         </button>
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={() => handleInput("+")}
+        >
+          +
+        </button>
         <button className={styles.button} onClick={() => handleInput("1")}>
           1
         </button>
@@ -73,14 +101,23 @@ const Calculator = () => {
         <button className={styles.button} onClick={() => handleInput("3")}>
           3
         </button>
-        <button className={styles.button} onClick={calculateResult}>
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={calculateResult}
+        >
           =
+        </button>
+        <button className={styles.button} onClick={() => handleInput(".")}>
+          .
         </button>
         <button className={styles.button} onClick={() => handleInput("0")}>
           0
         </button>
-        <button className={styles.button} onClick={() => handleInput(".")}>
-          .
+        <button
+          className={`${styles.button} ${styles.functionButton}`}
+          onClick={handleUndo}
+        >
+          <span className={styles.undoIcon}></span>
         </button>
       </div>
     </div>
