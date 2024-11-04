@@ -22,6 +22,9 @@
     font-size: 24px;
     text-align: right;
     color: black; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
 }
 
 .buttons {
@@ -92,16 +95,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    min-height: 100vh; /* Full viewport height */
-    background-color: #000; /* Black background for the whole page */
-    color: #fff; /* White text color */
+    min-height: 100vh; 
+    background-color: #000; 
+    color: #fff; 
   }
   
   .header {
     width: 100%;
     padding: 20px;
     text-align: center;
-    background-color: #000; /* Black background for the header */
-    color: #fff; /* White text for the header */
+    background-color: #000; 
+    color: #fff; 
   }
   

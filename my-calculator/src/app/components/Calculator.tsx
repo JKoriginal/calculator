@@ -2,18 +2,32 @@ import React, { useState } from "react";
 import styles from "./Calculator.module.css";
 
 const Calculator = () => {
-  const [input, setInput] = useState<string>("");
-  const [result, setResult] = useState<string>("");
+  const [input, setInput] = useState("");
+  const [result, setResult] = useState("");
 
   const handleInput = (value: string) => {
-    setInput(input + value);
+    // If there's a result and the user inputs an operator, start from that result
+    if (result && /[\+\-\*\/]/.test(value)) {
+      setInput(result + value);
+      setResult(""); // Clear result to avoid confusion on the next operation
+    } else if (result && /[\d\.]/.test(value)) {
+      // If user starts a new number input after result, reset input
+      setInput(value);
+      setResult("");
+    } else {
+      // Regular input continuation
+      setInput(input + value);
+    }
   };
 
   const calculateResult = () => {
     try {
-      setResult(eval(input).toString());
+      const calculatedResult = eval(input).toString();
+      setResult(calculatedResult);
+      setInput(calculatedResult); // Allow chaining further calculations
     } catch (error) {
       setResult("Error");
+      setInput(""); // Reset input if there's an error
     }
   };
 
@@ -25,12 +39,15 @@ const Calculator = () => {
   const handleUndo = () => {
     if (input.length > 0) {
       setInput(input.slice(0, -1));
+    } else if (result) {
+      setInput(result.slice(0, -1));
+      setResult("");
     }
   };
 
   return (
     <div className={styles.calculator}>
-      <div className={styles.display}>{result || input || "0"}</div>
+      <div className={styles.display}>{input || result || "0"}</div>
       <div className={styles.buttons}>
         <button
           className={`${styles.button} ${styles.functionButton}`}
