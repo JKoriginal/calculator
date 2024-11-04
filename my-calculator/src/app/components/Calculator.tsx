@@ -6,16 +6,13 @@ const Calculator = () => {
   const [result, setResult] = useState("");
 
   const handleInput = (value: string) => {
-    // If there's a result and the user inputs an operator, start from that result
     if (result && /[\+\-\*\/]/.test(value)) {
       setInput(result + value);
-      setResult(""); // Clear result to avoid confusion on the next operation
+      setResult("");
     } else if (result && /[\d\.]/.test(value)) {
-      // If user starts a new number input after result, reset input
       setInput(value);
       setResult("");
     } else {
-      // Regular input continuation
       setInput(input + value);
     }
   };
@@ -24,7 +21,7 @@ const Calculator = () => {
     try {
       const calculatedResult = eval(input).toString();
       setResult(calculatedResult);
-      setInput(calculatedResult); // Allow chaining further calculations
+      setInput(calculatedResult);
     } catch (error) {
       setResult("Error");
       setInput(""); // Reset input if there's an error
